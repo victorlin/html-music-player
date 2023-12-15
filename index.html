@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Waveform Player</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.4.0/wavesurfer.min.js"></script>
+</head>
+<body>
+  <input type="file" id="audio-file" accept="audio/mp3">
+  <div id="waveform"></div>
+  <script>
+    const wavesurfer = WaveSurfer.create({
+      container: '#waveform',
+      waveColor: 'violet',
+      progressColor: 'purple'
+    });
+
+    const fileInput = document.getElementById('audio-file');
+    fileInput.onchange = function() {
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const mp3Blob = new Blob([new Uint8Array(e.target.result)], {type: 'audio/mp3'});
+        wavesurfer.load(URL.createObjectURL(mp3Blob));
+      };
+      reader.readAsArrayBuffer(file);
+    };
+  </script>
+</body>
+</html>
