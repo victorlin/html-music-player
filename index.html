@@ -8,6 +8,11 @@
 <body>
   <input type="file" id="audio-file" accept="audio/mp3">
   <div id="waveform"></div>
+  <div id="controls">
+    <button id="playButton">Play</button>
+    <button id="pauseButton">Pause</button>
+    <button id="stopButton">Stop</button>
+  </div>
   <script>
     const wavesurfer = WaveSurfer.create({
       container: '#waveform',
@@ -24,6 +29,21 @@
         wavesurfer.load(URL.createObjectURL(mp3Blob));
       };
       reader.readAsArrayBuffer(file);
+    };
+
+    const playButton = document.getElementById('playButton');
+    playButton.onclick = function() {
+      wavesurfer.play();
+    };
+
+    const pauseButton = document.getElementById('pauseButton');
+    pauseButton.onclick = function() {
+      wavesurfer.pause();
+    };
+
+    const stopButton = document.getElementById('stopButton');
+    stopButton.onclick = function() {
+      wavesurfer.stop();
     };
   </script>
 </body>
