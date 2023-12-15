@@ -2,69 +2,61 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Waveform Player</title>
+  <title>🔊🌊</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.4.0/wavesurfer.min.js"></script>
 </head>
 <body>
   <input type="file" id="audio-file" accept="audio/mp3">
   <div id="waveform"></div>
-  <div id="controls">
-    <button id="playButton">Play</button>
-    <button id="pauseButton">Pause</button>
-    <button id="stopButton">Stop</button>
-  </div>
-  <script>
-    const wavesurfer = WaveSurfer.create({
-      container: '#waveform',
-      waveColor: 'violet',
-      progressColor: 'purple'
-    });
-
-    const fileInput = document.getElementById('audio-file');
-    fileInput.onchange = function() {
-      const file = fileInput.files[0];
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const mp3Blob = new Blob([new Uint8Array(e.target.result)], {type: 'audio/mp3'});
-        wavesurfer.load(URL.createObjectURL(mp3Blob));
-      };
-      reader.readAsArrayBuffer(file);
-    };
-
-    const playButton = document.getElementById('playButton');
-    playButton.onclick = function() {
-      wavesurfer.play();
-    };
-
-    const pauseButton = document.getElementById('pauseButton');
-    pauseButton.onclick = function() {
-      wavesurfer.pause();
-    };
-
-    const stopButton = document.getElementById('stopButton');
-    stopButton.onclick = function() {
-      wavesurfer.stop();
-    };
-
-    document.addEventListener('keydown', function(event) {
-      switch (event.key) {
-        case 'j':
-          wavesurfer.skipBackward(10);
-          break;
-        case 'k':
-          wavesurfer.playPause();
-          break;
-        case 'l':
-          wavesurfer.skipForward(10);
-          break;
-        case 'ArrowLeft':
-          wavesurfer.skipBackward(5);
-          break;
-        case 'ArrowRight':
-          wavesurfer.skipForward(5);
-          break;
-      }
-    });
-  </script>
+  <button id="playPauseButton">⏯️</button>
 </body>
 </html>
+
+<script>
+  const wavesurfer = WaveSurfer.create({
+    container: '#waveform',
+    waveColor: 'gray',
+    progressColor: 'darkslategray'
+  });
+
+  const fileInput = document.getElementById('audio-file');
+  fileInput.onchange = function() {
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const mp3Blob = new Blob([new Uint8Array(e.target.result)], {type: 'audio/mp3'});
+      wavesurfer.load(URL.createObjectURL(mp3Blob));
+    };
+    reader.readAsArrayBuffer(file);
+  };
+
+  const playPauseButton = document.getElementById('playPauseButton');
+  playPauseButton.onclick = function() {
+    if (wavesurfer.isPlaying()) {
+      wavesurfer.pause();
+    } else {
+      wavesurfer.play();
+    }
+  };
+
+  document.addEventListener('keydown', function(event) {
+    switch (event.key) {
+      case 'j':
+        wavesurfer.skipBackward(10);
+        break;
+      case 'k':
+      case ' ':
+        wavesurfer.playPause();
+        break;
+      case 'l':
+        wavesurfer.skipForward(10);
+        break;
+      case 'ArrowLeft':
+        wavesurfer.skipBackward(5);
+        break;
+      case 'ArrowRight':
+        wavesurfer.skipForward(5);
+        break;
+    }
+  });
+</script>
