@@ -22,6 +22,9 @@
   const fileInput = document.getElementById('audio-file');
   fileInput.onchange = function() {
     const file = fileInput.files[0];
+
+    document.title = `🔊🌊 ${file.name}`;
+
     const reader = new FileReader();
     reader.onload = function(e) {
       const mp3Blob = new Blob([new Uint8Array(e.target.result)], {type: 'audio/mp3'});
