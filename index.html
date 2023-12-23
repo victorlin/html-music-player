@@ -9,6 +9,8 @@
   <input type="file" id="audio-file" accept="audio/mp3">
   <div id="waveform"></div>
   <button id="playPauseButton">⏯️</button>
+
+  <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
 </body>
 </html>
 
@@ -40,6 +42,19 @@
     } else {
       wavesurfer.play();
     }
+  };
+
+  wavesurfer.on('audioprocess', function() {
+    const currentTime = wavesurfer.getCurrentTime();
+    const duration = wavesurfer.getDuration();
+    document.getElementById('currentTime').textContent = formatTime(currentTime);
+    document.getElementById('duration').textContent = formatTime(duration);
+  });
+
+  function formatTime(timeInSeconds) {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = Math.floor(timeInSeconds % 60);
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
 
   document.addEventListener('keydown', function(event) {
