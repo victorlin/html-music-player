@@ -6,7 +6,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.4.0/wavesurfer.min.js"></script>
 </head>
 <body>
-  <input type="file" onchange="loadFile(event)" accept="audio/mp3">
+  <label>
+    <span>📂⬇</span>
+    <input type="file" onchange="loadFile(event)" accept="audio/mp3" style="display: none">
+  </label>
   <div id="waveform"></div>
   <button onclick="togglePlayback()">⏯️</button>
 
