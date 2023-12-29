@@ -6,9 +6,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.4.0/wavesurfer.min.js"></script>
 </head>
 <body>
-  <input type="file" id="audio-file" accept="audio/mp3">
+  <input type="file" onchange="loadFile(event)" accept="audio/mp3">
   <div id="waveform"></div>
-  <button id="playPauseButton">⏯️</button>
+  <button onclick="togglePlayback()">⏯️</button>
 
   <span id="currentTime">0:00</span> / <span id="duration">0:00</span>
 </body>
@@ -21,9 +21,8 @@
     progressColor: 'darkslategray'
   });
 
-  const fileInput = document.getElementById('audio-file');
-  fileInput.onchange = function() {
-    const file = fileInput.files[0];
+  function loadFile(event) {
+    const file = event.target.files[0];
 
     document.title = `🔊🌊 ${file.name}`;
 
@@ -35,8 +34,7 @@
     reader.readAsArrayBuffer(file);
   };
 
-  const playPauseButton = document.getElementById('playPauseButton');
-  playPauseButton.onclick = function() {
+  function togglePlayback() {
     if (wavesurfer.isPlaying()) {
       wavesurfer.pause();
     } else {
