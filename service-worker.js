@@ -4,8 +4,8 @@ self.addEventListener('install', (event) => {
       .open('v1')
       .then((cache) =>
         cache.addAll([
-          '/',
-          '/index.html',
+          './',
+          './index.html',
         ]),
       ),
   );
